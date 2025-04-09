@@ -53,7 +53,7 @@ const Layout = () => {
 
       
       <div
-        className={`w-full sm:w-1/5 bg-gray-200 text-gray-800 border-r border-gray-200 p-6 flex flex-col sm:block transition-transform duration-300 ${
+        className={`w-full sm:w-1/5 bg-white text-gray-800 border-r border-gray-200 p-6 flex flex-col sm:block transition-transform duration-300 ${
           isSidebarOpen ? "block" : "hidden sm:block"
         }`}
       >
@@ -63,7 +63,7 @@ const Layout = () => {
             { to: "/dashboard", icon: <FaTachometerAlt />, label: "Dashboard" },
             { to: "/customers", icon: <FaUsers />, label: "Customers" },
             { to: "/products", icon: <FaBox />, label: "Products" },
-            { to: "/order", icon: <FaChartLine />, label: "Orders" },
+            { to: "/orders", icon: <FaChartLine />, label: "Orders" },
             { to: "/report", icon: <FaFileInvoiceDollar />, label: "Report" },
           ].map(({ to, icon, label }) => (
             <li key={to}>
@@ -93,7 +93,7 @@ const Layout = () => {
       </div>
 
       {/* Content Area */}
-      <div className="w-full sm:w-4/5 bg-white overflow-y-auto ">
+      <div className="w-full sm:w-4/5 bg-gray-200 overflow-y-auto ">
         <Outlet />
       </div>
     </div>
