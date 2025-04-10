@@ -1,57 +1,48 @@
-import React, { useContext, useEffect, useState } from 'react';
-import LoginImg from '../assets/login.jpg';
-import { useNavigate } from 'react-router-dom';
-import { validateLogin } from '../utils/validations';
-import { signInService } from '../services/authServices';
-import { toast } from 'sonner';
-import { useAuth } from '../context/AuthContext';
+import React, { useContext, useEffect, useState } from "react";
+import LoginImg from "../assets/login.jpg";
+import { useNavigate } from "react-router-dom";
+import { validateLogin } from "../utils/validations";
+import { signInService } from "../services/authServices";
+import { toast } from "sonner";
+import { useAuth } from "../context/AuthContext";
 
 function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
-  const {login} = useAuth()
-
-
+  const { login, auth } = useAuth();
 
   useEffect(() => {
-    // setIsAdminLoggedIn(false)
-    // if(isAdminLoggedIn){
-    //    navigate('/home', {replace:true})
-    // }
-    
- },[])
+    if (auth.isLoggedIn) {
+      navigate("/dashboard");
+    }
+  }, []);
 
-  const handleLogin = async() => {
-    const validationErrors = validateLogin({ email, password }); 
+  const handleLogin = async () => {
+    const validationErrors = validateLogin({ email, password });
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length > 0) {
       setTimeout(() => {
         setErrors({});
       }, 2000);
-      return; 
+      return;
     }
 
-    
-
     if (Object.keys(validationErrors).length === 0) {
-       try {
-         const response = await signInService(email, password);
-         if(response.success){
-           
-           const adminId = response.id
-           login(adminId)
-           navigate('/dashboard')
-           toast.success("Login success")
-         }
-       } catch (error) {
-        console.log(error)
-          toast.error(error.response.data.error)
-       }
-      // console.log('Logging in with', { email, password });
-      // navigate('/dashboard');
+      try {
+        const response = await signInService(email, password);
+        if (response.success) {
+          const adminId = response.id;
+          login(adminId);
+          navigate("/dashboard");
+          toast.success("Login success");
+        }
+      } catch (error) {
+        console.log(error);
+        toast.error(error.response.data.error);
+      }
     }
   };
 
@@ -59,11 +50,19 @@ function Login() {
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-800 to-gray-900">
       <div className="flex w-full max-w-4xl bg-white/10 backdrop-blur-lg shadow-xl rounded-2xl overflow-hidden">
         <div className="w-1/2 hidden md:block">
-          <img src={LoginImg} alt="image" className="w-full h-full object-cover" />
+          <img
+            src={LoginImg}
+            alt="image"
+            className="w-full h-full object-cover"
+          />
         </div>
         <div className="w-full md:w-1/2 p-10">
-          <h1 className="text-4xl font-extrabold text-white text-center mb-3">Welcome Back</h1>
-          <h2 className="text-lg text-gray-300 text-center mb-6">Login to Your Account</h2>
+          <h1 className="text-4xl font-extrabold text-white text-center mb-3">
+            Welcome Back
+          </h1>
+          <h2 className="text-lg text-gray-300 text-center mb-6">
+            Login to Your Account
+          </h2>
 
           <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
             <div className="relative">

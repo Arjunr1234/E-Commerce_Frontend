@@ -9,6 +9,7 @@ import Report from './pages/Report'
 import ProtectedRoute from './utils/ProtectedRoute'
 import Layout from './components/Layout'
 import ViewOrder from './components/ViewOrder'
+import NotFound from './components/NotFound'
 
 function App() {
   
@@ -27,6 +28,7 @@ function App() {
                   <Route path='/view-order' element={<ViewOrder/>}/>
               </Route>   
             </Route>
+            <Route path='*' element={<NotFound/>} />
         </Routes>
      
       </>

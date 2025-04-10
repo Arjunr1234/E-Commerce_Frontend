@@ -7,7 +7,7 @@ export const useErrorHandler = () => {
   const handleError = (error) => {
     if (error.response) {
       const status = error.response.status;
-      if (status === 403) {
+      if (status === 401) {
         logout();
         toast.warning("Please login again...");
       } else if (status === 403) {

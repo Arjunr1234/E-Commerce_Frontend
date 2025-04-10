@@ -1,8 +1,5 @@
 import { axiosInstance } from "../api/axiosInstance";
 import { auth } from "../api/url";
-import { useAuth } from "../context/AuthContext";
-
-
 
 export const signInService = async (email, password) => {
   try {
@@ -17,7 +14,7 @@ export const signInService = async (email, password) => {
 export const logoutService = async () => {
   try {
     const response = await axiosInstance.get(auth.logout);
-    return response.data
+    return response.data;
   } catch (error) {
     throw error;
   }

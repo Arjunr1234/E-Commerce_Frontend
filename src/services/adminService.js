@@ -27,23 +27,43 @@ export const getProductService = async () => {
     throw error;
   }
 };
-
-export const getOrderService = async () => {
+export const getOrderService = async (
+  currentPage = 1,
+  limit = 6,
+  search = "",
+  status = ""
+) => {
   try {
-    const respone = await axiosInstance.get(analytics.orders);
-    return respone.data;
+    const response = await axiosInstance.get(analytics.orders, {
+      params: { page: currentPage, limit, search, status },
+    });
+    return response.data;
   } catch (error) {
     throw error;
   }
 };
 
-export const viewOrderService = async(orderId) => {
-   try {
+export const viewOrderService = async (orderId) => {
+  try {
+    const response = await axiosInstance.get(
+      `${analytics.viewOrder}/${orderId}`
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
 
-       const response = await axiosInstance.get(`${analytics.viewOrder}/${orderId}`);
-       return response.data
-    
-   } catch (error) {
-      throw error
-   }
-}  
+export const reportServie = async (startDate, endDate) => {
+  try {
+    const response = await axiosInstance.get(analytics.report, {
+      params: {
+        startDate,
+        endDate,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

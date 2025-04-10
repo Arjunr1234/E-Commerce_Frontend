@@ -8,5 +8,6 @@ export const analytics = {
     orders:'/api/analytics/orders',
     customers:'/api/analytics/cutomers',
     products:'/api/analytics/products',
-    viewOrder:'/api/analytics/view-order'
+    viewOrder:'/api/analytics/view-order',
+    report:'/api/analytics/report'
 }

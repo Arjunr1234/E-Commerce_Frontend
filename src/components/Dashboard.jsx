@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Users, DollarSign } from "lucide-react";
-
+import { COLORS } from "../utils/constants";
 import {
   ResponsiveContainer,
   BarChart,
@@ -15,23 +15,14 @@ import {
   Cell,
 } from "recharts";
 import { getRevenueService } from "../services/adminService";
-
-const weeklyData = [
-  { name: "Mon", revenue: 3000 },
-  { name: "Tue", revenue: 3500 },
-  { name: "Wed", revenue: 4000 },
-  { name: "Thu", revenue: 3700 },
-  { name: "Fri", revenue: 4200 },
-  { name: "Sat", revenue: 4800 },
-  { name: "Sun", revenue: 5000 },
-];
-
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#845EC2"];
+import { useErrorHandler } from "../hooks/useErrorHandle";
 
 function Dashboard() {
   const [monthyRevenue, setMonthlyRevenue] = useState([]);
+  const [weeklyData, setWeeklyData] = useState([]);
   const [totalRevenue, setTotalRevenue] = useState(null);
   const [totalUsers, setTotalUsers] = useState(null);
+  const handleError = useErrorHandler();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,15 +32,14 @@ function Dashboard() {
           setMonthlyRevenue(response.monthlyRevenue);
           setTotalUsers(response.totalCustomers);
           setTotalRevenue(response.totalRevenue);
+          setWeeklyData(response.weekelyRevenue);
         }
-      } catch (error) {}
+      } catch (error) {
+        handleError(error);
+      }
     };
     fetchData();
   }, []);
-
-  useEffect(() => {
-    console.log("monthlyrevenue: ", monthyRevenue);
-  }, [monthyRevenue]);
 
   return (
     <div>
